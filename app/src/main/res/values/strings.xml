@@ -1,0 +1,10 @@
+<resources>
+    <string name="app_name">Final Exam</string>
+    <string name="total_students">Total No. of Students</string>
+    <string name="a_students">A\'s Students</string>
+    <string name="b_students">B\'s Students</string>
+    <string name="c_students">C\'s Students</string>
+    <string name="d_students">D\'s Students</string>
+    <string name="f_students">F\'s Students</string>
+    <string name="compute">Compute</string>
+</resources>
