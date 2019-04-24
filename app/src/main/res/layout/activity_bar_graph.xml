@@ -10,7 +10,8 @@
     <com.github.mikephil.charting.charts.BarChart
         android:layout_width="match_parent"
         android:layout_height="400dp"
-        android:id="@+id/bar_chart">
+        android:id="@+id/bar_chart"
+        android:background="@color/colorAccent">
 
     </com.github.mikephil.charting.charts.BarChart>
 </LinearLayout>

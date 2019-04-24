@@ -6,9 +6,13 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.github.mikephil.charting.charts.BarChart;
+import com.github.mikephil.charting.components.AxisBase;
+import com.github.mikephil.charting.components.XAxis;
 import com.github.mikephil.charting.data.BarData;
 import com.github.mikephil.charting.data.BarDataSet;
 import com.github.mikephil.charting.data.BarEntry;
+import com.github.mikephil.charting.formatter.IAxisValueFormatter;
+import com.github.mikephil.charting.formatter.ValueFormatter;
 import com.github.mikephil.charting.interfaces.datasets.IBarDataSet;
 import com.github.mikephil.charting.utils.ColorTemplate;
 
@@ -18,6 +22,7 @@ import java.util.List;
 public class BarGraph extends AppCompatActivity {
 
     BarChart barChart;
+    ArrayList<BarEntry> barEntries;
     float a_students;
     float b_students;
     float c_students;
@@ -26,14 +31,16 @@ public class BarGraph extends AppCompatActivity {
 
     Intent intent;
     BarDataSet barDataSet;
-    BarData barData;
+    BarData data;
+    String[] grades;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_bar_graph);
 
-        intent =  getIntent();
+        grades = new String[]{"A", "B", "C", "D", "F"};
+        intent = getIntent();
         a_students = intent.getFloatExtra("A", 0);
         b_students = intent.getFloatExtra("B", 0);
         c_students = intent.getFloatExtra("C", 0);
@@ -41,22 +48,28 @@ public class BarGraph extends AppCompatActivity {
         f_students = intent.getFloatExtra("F", 0);
 
         barChart = findViewById(R.id.bar_chart);
-        barDataSet = new BarDataSet(dataValue(), "Grades");
-        barData = new BarData();
-        barData.addDataSet(barDataSet);
+        barChart.setDrawBarShadow(false);
+        barChart.setMaxVisibleValueCount(100);
+        barChart.setPinchZoom(false);
+        barChart.setDrawGridBackground(true);
 
-        barChart.setData(barData);
-        barChart.setFitBars(true);
-    }
+        barEntries = new ArrayList<>();
+        barEntries.add(new BarEntry(1, a_students));
+        barEntries.add(new BarEntry(2, b_students));
+        barEntries.add(new BarEntry(3, c_students));
+        barEntries.add(new BarEntry(4, d_students));
+        barEntries.add(new BarEntry(5, f_students));
 
-    private ArrayList<BarEntry> dataValue() {
-        ArrayList<BarEntry> dataVals = new ArrayList<>();
-        dataVals.add(new BarEntry(a_students, 0));
-        dataVals.add(new BarEntry(b_students, 1));
-        dataVals.add(new BarEntry(c_students, 2));
-        dataVals.add(new BarEntry(d_students, 3));
-        dataVals.add(new BarEntry(f_students, 4));
-        return dataVals;
+        barDataSet = new BarDataSet(barEntries, "Grades");
+        barDataSet.setColors(ColorTemplate.COLORFUL_COLORS);
+
+        data = new BarData(barDataSet);
+        data.setBarWidth(0.9f);
+
+        barChart.setData(data);
+        XAxis xAxis = barChart.getXAxis();
+        xAxis.setPosition(XAxis.XAxisPosition.BOTTOM);
+        xAxis.setDrawGridLines(false);
     }
 
 }
